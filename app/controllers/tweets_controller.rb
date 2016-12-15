@@ -23,7 +23,7 @@ class TweetsController < ApplicationController
   # POST /tweets
   def create
     @tweet = Tweet.new(tweet_params)
-    @tweet.user_name = current_user.email
+    @tweet.username = current_user.email
 
     if @tweet.save
       redirect_to @tweet, notice: 'Tweet was successfully created.'
@@ -34,8 +34,8 @@ class TweetsController < ApplicationController
 
   def like
     @tweet = Tweet.find(params[:id])
-    if @tweet.not_already_hearted?(current_user)
-      @tweet.likes.create(user: current_user)
+    if @tweet.not_already_heart?(current_user)
+      @tweet.hearts.create(user: current_user)
       redirect_to tweets_path
     else
       redirect_to tweets_path, notice: "sorry, you've already liked this tweet"
